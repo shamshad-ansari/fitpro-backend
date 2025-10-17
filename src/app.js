@@ -1,4 +1,5 @@
 import express from "express";
+import rateLimit from "express-rate-limit";
 import healthRoutes from "./routes/health.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
@@ -6,8 +7,14 @@ import userRoutes from "./routes/user.routes.js";
 const app = express();
 app.use(express.json());
 
-// Basic parsing; will add security middleware later
-app.use(express.json());
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+app.use("/api/auth", authLimiter);
 
 app.use("/", healthRoutes);
 app.use("/api/auth", authRoutes);
