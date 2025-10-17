@@ -19,4 +19,10 @@ router.post(
   signup
 );
 
+router.post(
+  "/login",
+  [body("email").isEmail(), body("password").isLength({ min: 6 })],
+  login
+);
+
 export default router;
