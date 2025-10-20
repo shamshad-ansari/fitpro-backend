@@ -22,4 +22,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/exercises", exerciseRoutes);
 
+// central 404 + error handler (ALWAYS LAST)
+app.use(notFound);
+app.use(errorHandler);
+
 export default app;
