@@ -8,11 +8,16 @@ const ExerciseSchema = new mongoose.Schema(
       required: true,
       index: true,
     },
-    name: { type: String, required: true, trim: true }, // e.g., "Bench Press"
-    category: { type: String, trim: true }, // e.g., "strength", "cardio"
+    name: { type: String, required: true, trim: true },
+    category: { type: String, trim: true }, // "strength", "cardio", etc.
     durationMin: { type: Number, min: 0 },
+    sets: { type: Number, min: 0 },
+    reps: { type: Number, min: 0 },
+    weightKg: { type: Number, min: 0 },
+    distanceKm: { type: Number, min: 0 },
+    calories: { type: Number, min: 0 },
+    notes: { type: String, trim: true },
     performedAt: { type: Date, default: Date.now, index: true },
-    // room to grow later: sets, reps, weightKg, distanceKm, calories, notes...
   },
   { timestamps: true }
 );
