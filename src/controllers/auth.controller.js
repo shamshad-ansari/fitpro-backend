@@ -2,7 +2,7 @@
 
 import bcrypt from "bcryptjs";
 import { validationResult } from "express-validator";
-import { User } from "../models/Users";
+import { User } from "../models/User.js";
 import { signAccessToken } from "../utils/jwt.js";
 
 const SALT_ROUNDS = 10;
@@ -10,16 +10,14 @@ const SALT_ROUNDS = 10;
 export async function signup(req, res) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res
-      .status(400)
-      .json({
-        success: false,
-        message: "Validation failed",
-        errors: errors.array(),
-      });
+    return res.status(400).json({
+      success: false,
+      message: "Validation failed",
+      errors: errors.array(),
+    });
   }
 
-  const { email, name, password } = req.body;
+  const { email, name, age, password } = req.body;
 
   const existing = await User.findOne({ email });
   if (existing) {
@@ -29,40 +27,38 @@ export async function signup(req, res) {
   }
 
   const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
-  const user = await User.create({ email, name, passwordHash });
+  const user = await User.create({ email, name, age, passwordHash });
 
   const safeUser = {
     _id: user._id,
     email: user.email,
     name: user.name,
+    age: user.age,
     fitnessLevel: user.fitnessLevel,
     goals: user.goals,
   };
 
-  return res
-    .status(201)
-    .json({
-      success: true,
-      data: { user: safeUser },
-      message: "Signup successful",
-    });
+  return res.status(201).json({
+    success: true,
+    data: { user: safeUser },
+    message: "Signup successful",
+  });
 }
 
 export async function login(req, res) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res
-      .status(400)
-      .json({
-        success: false,
-        message: "Validation failed",
-        errors: errors.array(),
-      });
+    return res.status(400).json({
+      success: false,
+      message: "Validation failed",
+      errors: errors.array(),
+    });
   }
 
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
+  console.log(user)
   if (!user)
     return res
       .status(401)

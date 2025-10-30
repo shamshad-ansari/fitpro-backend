@@ -30,7 +30,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(attachModels);
 
 // basic hygiene
-app.use(mongoSanitize()); // blocks $ and . in keys for Mongo injection
+// app.use(mongoSanitize()); // blocks $ and . in keys for Mongo injection
 app.use(hpp()); // blocks HTTP param pollution
 app.use(compression()); // gzip responses
 
