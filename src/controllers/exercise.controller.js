@@ -1,5 +1,7 @@
 import { Exercise } from "../models/Exercise.js";
 
+const getUserId = (req) => req.user?.id || req.user?._id;
+
 export async function createExercise(req, res) {
   const {
     name,
@@ -99,4 +101,30 @@ export async function summaryExercises(req, res) {
 
   const rows = await Exercise.aggregate(pipeline);
   return res.json({ success: true, data: rows });
+}
+
+// GET /api/exercises/last?name=ExerciseName
+export async function getLastExerciseForName(req, res, next) {
+  try {
+    const userId = req.user._id;
+    const { name } = req.query;
+
+    if (!name) {
+      return res.status(400).json({
+        success: false,
+        message: "Missing 'name' query parameter",
+      });
+    }
+
+    const last = await Exercise.findOne({ user: userId, name })
+      .sort({ performedAt: -1 })
+      .lean();
+
+    return res.json({
+      success: true,
+      data: last || null,  // null = no history = empty placeholders on iOS
+    });
+  } catch (err) {
+    next(err);
+  }
 }

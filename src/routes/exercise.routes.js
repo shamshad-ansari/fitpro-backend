@@ -1,3 +1,4 @@
+// src/routes/exercise.routes.js
 import { Router } from "express";
 import { body, query } from "express-validator";
 import { authRequired } from "../middleware/auth.middleware.js";
@@ -6,10 +7,12 @@ import {
   createExercise,
   listExercises,
   summaryExercises,
+  getLastExerciseForName, // ⬅️ import it
 } from "../controllers/exercise.controller.js";
 
 const router = Router();
 
+// Create exercise
 router.post(
   "/",
   authRequired,
@@ -28,6 +31,15 @@ router.post(
   createExercise
 );
 
+// 🔹 NEW: last exercise for placeholder/ghost text
+router.get(
+  "/last",
+  authRequired,
+  validate([query("name").isString()]),
+  getLastExerciseForName
+);
+
+// List exercises
 router.get(
   "/",
   authRequired,
@@ -42,7 +54,7 @@ router.get(
   listExercises
 );
 
-// Daily summary within range
+// Daily summary
 router.get(
   "/summary",
   authRequired,

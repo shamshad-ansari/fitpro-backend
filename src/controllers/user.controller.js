@@ -4,6 +4,7 @@ export async function getMe(req, res) {
 
 export async function updateProfile(req, res) {
   const { name, avatarUrl, heightCm, weightKg, fitnessLevel } = req.body;
+  console.log(name, heightCm, weightKg, fitnessLevel);
 
   const updated = await req.models.User.findByIdAndUpdate(
     req.user._id,

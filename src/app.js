@@ -14,6 +14,7 @@ import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import exerciseRoutes from "./routes/exercise.routes.js";
 import progressRoutes from "./routes/progress.routes.js";
+import workoutsRoutes from "./routes/workouts.routes.js";
 import { notFound, errorHandler } from "./middleware/error.middleware.js";
 
 const app = express();
@@ -52,6 +53,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/exercises", exerciseRoutes);
 app.use("/api/progress", progressRoutes);
+app.use("/api/workouts", workoutsRoutes);
 
 // Errors (must be last)
 app.use(notFound);
