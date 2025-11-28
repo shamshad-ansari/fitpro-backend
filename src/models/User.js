@@ -28,6 +28,21 @@ const userSchema = new mongoose.Schema(
     age: { type: Number, required: true, trim: true },
     heightCm: { type: Number, min: 0 },
     weightKg: { type: Number, min: 0 },
+    gender: {
+      type: String,
+      enum: ["male", "female", "non_binary", "prefer_not_to_say"],
+      default: "prefer_not_to_say",
+    },
+    dailyCalorieTarget: {
+      type: Number,
+      default: 2000, // can tweak later or calculate from profile
+    },
+
+    macroTargets: {
+      proteinG: { type: Number, default: 150 },
+      carbsG: { type: Number, default: 250 },
+      fatsG: { type: Number, default: 65 },
+    },
     fitnessLevel: {
       type: String,
       enum: ["beginner", "intermediate", "advanced"],

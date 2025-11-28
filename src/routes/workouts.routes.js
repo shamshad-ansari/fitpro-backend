@@ -6,8 +6,10 @@ import {
   listRoutines,
   getRoutineById,
   updateRoutine,
+  deleteRoutine,
   createSession,
   listSessions,
+  deleteSession,
 } from "../controllers/workouts.controller.js";
 
 const router = Router();
@@ -18,11 +20,13 @@ router.use(authRequired);
 // Sessions (history)
 router.post("/sessions", createSession);
 router.get("/sessions", listSessions);
+router.delete("/sessions/:id", deleteSession);
 
 // Routines
 router.post("/", createRoutine);
 router.get("/", listRoutines);
 router.get("/:id", getRoutineById);
 router.patch("/:id", updateRoutine);
+router.delete("/:id", deleteRoutine);
 
 export default router;

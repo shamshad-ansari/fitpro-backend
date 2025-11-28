@@ -8,20 +8,7 @@ const routineExerciseSchema = new Schema(
     name: { type: String, required: true, trim: true },
     description: { type: String, trim: true },
 
-    bodyPart: {
-      type: String,
-      enum: [
-        "chest",
-        "back",
-        "legs",
-        "arms",
-        "shoulders",
-        "core",
-        "full_body",
-        "other",
-      ],
-      default: "other",
-    },
+    bodyPart: { type: String },
 
     defaultSets: { type: Number, min: 1, default: 3 },
     defaultReps: { type: Number, min: 1, default: 10 },

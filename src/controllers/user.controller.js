@@ -3,12 +3,21 @@ export async function getMe(req, res) {
 }
 
 export async function updateProfile(req, res) {
-  const { name, avatarUrl, heightCm, weightKg, fitnessLevel } = req.body;
-  console.log(name, heightCm, weightKg, fitnessLevel);
+  const { name, avatarUrl, heightCm, weightKg, fitnessLevel, gender } =
+    req.body;
+  console.log(name, heightCm, weightKg, fitnessLevel, gender);
+
+  const updates = {};
+  if (name !== undefined) updates.name = name;
+  if (avatarUrl !== undefined) updates.avatarUrl = avatarUrl;
+  if (heightCm !== undefined) updates.heightCm = heightCm;
+  if (weightKg !== undefined) updates.weightKg = weightKg;
+  if (fitnessLevel !== undefined) updates.fitnessLevel = fitnessLevel;
+  if (gender !== undefined) updates.gender = gender;
 
   const updated = await req.models.User.findByIdAndUpdate(
     req.user._id,
-    { $set: { name, avatarUrl, heightCm, weightKg, fitnessLevel } },
+    { $set: updates },
     { new: true, runValidators: true, select: "-passwordHash" }
   );
 

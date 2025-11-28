@@ -1,5 +1,3 @@
-// Minimal signup
-
 import bcrypt from "bcryptjs";
 import { validationResult } from "express-validator";
 import { User } from "../models/User.js";
@@ -34,6 +32,9 @@ export async function signup(req, res) {
     email: user.email,
     name: user.name,
     age: user.age,
+    gender: user.gender,
+    heightCm: user.heightCm,
+    weightKg: user.weightKg,
     fitnessLevel: user.fitnessLevel,
     goals: user.goals,
   };
@@ -76,6 +77,10 @@ export async function login(req, res) {
     _id: user._id,
     email: user.email,
     name: user.name,
+    age: user.age,
+    gender: user.gender,
+    heightCm: user.heightCm,
+    weightKg: user.weightKg,
     fitnessLevel: user.fitnessLevel,
     goals: user.goals,
   };
